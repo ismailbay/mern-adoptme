@@ -6,14 +6,14 @@ export default function SignUp() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-    const res = await fetch('/api/auth/signup', {
-      method: 'POST',
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
     });
@@ -25,13 +25,22 @@ export default function SignUp() {
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Registrieren</h1>
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Benutzername"
-          className="border p-2 rounded-md"
-          id="username"
-          onChange={handleChange}
-        ></input>
+        <div className="grid grid-cols-2 gap-3">
+          <input
+            type="text"
+            placeholder="Vorname"
+            className="border p-2 rounded-md"
+            id="firstname"
+            onChange={handleChange}
+          ></input>
+          <input
+            type="text"
+            placeholder="Nachname"
+            className="border p-2 rounded-md"
+            id="lastname"
+            onChange={handleChange}
+          ></input>
+        </div>
         <input
           type="email"
           placeholder="E-Mail Adresse"
