@@ -25,7 +25,7 @@ The project is organized into the following directories:
 This project is part one of a series of projects aimed at learning various web development technologies. The upcoming projects include:
 
 - **Part 2:** Prisma Express React Node.js with TypeScript and Tailwind CSS  
-  Focus: switching to Typescript
+  Focus: switching to Typescript and Prisma ORM
 - **Part 3:** Next.js with TypeScript  
   Focus: Server Rendering
 - **Part 4:** Backend Frameworks    
