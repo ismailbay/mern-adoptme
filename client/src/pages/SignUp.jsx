@@ -1,24 +1,39 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    const res = await fetch("/api/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-    const data = await res.json();
-    console.log(data);
+    try {
+      setLoading(true);
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+
+      if (data.success === false) {
+        setError({ message: data.message });
+        setLoading(false);
+        return;
+      }
+      setLoading(false);
+      setError(null);
+      navigate("/login");
+    } catch (e) {
+      setLoading(false);
+    }
   };
 
   return (
@@ -55,8 +70,11 @@ export default function SignUp() {
           id="password"
           onChange={handleChange}
         ></input>
-        <button className="bg-sky-950 p-3 text-white rounded-md hover:opacity-90 disabled:opacity-30">
-          Registrieren
+        <button
+          disabled={loading}
+          className="bg-sky-950 p-3 text-white rounded-md hover:opacity-90 disabled:opacity-30"
+        >
+          {loading ? "..." : "Registrieren"}
         </button>
       </form>
       <div className="flex gap-2 mt-3 justify-end">
@@ -65,6 +83,7 @@ export default function SignUp() {
           <span className="text-sky-700">Zum Login</span>
         </Link>
       </div>
+      {error && <p className="text-red-700 mt-5">{error.message}</p>}
     </div>
   );
 }
