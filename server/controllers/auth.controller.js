@@ -1,5 +1,5 @@
 import bcryptjs from "bcryptjs";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 import { errorHandler } from "../utils/error.js";
 
@@ -31,10 +31,11 @@ export const login = async (req, res, next) => {
       return next(errorHandler(401, "Login failed!"));
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+    const { password: pass, ...response } = user._doc;
     res
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
-      .json(user);
+      .json(response);
   } catch (error) {
     next(error);
   }
