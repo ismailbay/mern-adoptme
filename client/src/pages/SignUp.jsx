@@ -33,15 +33,17 @@ export default function SignUp() {
       navigate("/login");
     } catch (e) {
       setLoading(false);
+      setError({ message: e.message });
     }
   };
 
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl text-center font-semibold my-7">Registrieren</h1>
+      <h1 className="text-3xl font-semibold my-7">Registrieren</h1>
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-3">
           <input
+            required={true}
             type="text"
             placeholder="Vorname"
             className="border p-2 rounded-md"
@@ -49,6 +51,7 @@ export default function SignUp() {
             onChange={handleChange}
           ></input>
           <input
+            required={true}
             type="text"
             placeholder="Nachname"
             className="border p-2 rounded-md"
@@ -57,6 +60,7 @@ export default function SignUp() {
           ></input>
         </div>
         <input
+          required={true}
           type="email"
           placeholder="E-Mail Adresse"
           className="border p-2 rounded-md"
@@ -64,6 +68,7 @@ export default function SignUp() {
           onChange={handleChange}
         ></input>
         <input
+          required={true}
           type="password"
           placeholder="Passwort"
           className="border p-2 rounded-md"

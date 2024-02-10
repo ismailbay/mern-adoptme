@@ -26,8 +26,7 @@ export const login = async (req, res, next) => {
 
   try {
     const user = await User.findOne({ email });
-    if (!user) return next(errorHandler(404, "User does not exist!"));
-    if (!bcryptjs.compareSync(password, user.password))
+    if (!user || !bcryptjs.compareSync(password, user.password))
       return next(errorHandler(401, "Login failed!"));
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
