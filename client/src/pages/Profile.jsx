@@ -5,6 +5,9 @@ import {
   updateStart,
   updateSuccess,
   updateFailed,
+  logoutStart,
+  logoutFailed,
+  logoutSuccess,
 } from "../redux/user/userSlice";
 
 export default function Profile() {
@@ -12,9 +15,26 @@ export default function Profile() {
   const [updated, setUpdated] = useState(false);
   const { loading, error, currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleLogout = async () => {
+    try {
+      dispatch(logoutStart());
+      const res = await fetch("/api/auth/logout");
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(logoutFailed(data));
+        return;
+      }
+      dispatch(logoutSuccess(data));
+      navigate("/");
+    } catch (e) {
+      dispatch(logoutFailed(e.message));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -80,7 +100,9 @@ export default function Profile() {
       </form>
       <div className="flex gap-2 mt-3 justify-end">
         <Link to={"/logout"}>
-          <span className="text-sky-700">Ausloggen</span>
+          <span className="text-sky-700" onClick={handleLogout}>
+            Ausloggen
+          </span>
         </Link>
       </div>
       {error && <p className="text-red-700 mt-5">{error.message}</p>}
