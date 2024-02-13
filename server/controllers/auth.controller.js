@@ -30,11 +30,11 @@ export const login = async (req, res, next) => {
       return next(errorHandler(401, "Login failed!"));
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
-    const { password: pass, ...response } = user._doc;
+    const { password: pass, ...rest } = user._doc;
     res
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
-      .json(response);
+      .json(rest);
   } catch (error) {
     next(error);
   }
