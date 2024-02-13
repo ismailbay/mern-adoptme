@@ -4,6 +4,14 @@ import { useSelector } from "react-redux";
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
+
+  const getInitials = (currentUser) => {
+    if (currentUser && currentUser.firstname && currentUser.lastname) {
+      return currentUser.firstname[0] + currentUser.lastname[0];
+    }
+    return "";
+  };
+
   return (
     <header className="bg-sky-950 shadow-md text-sky-100">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
@@ -14,23 +22,21 @@ export default function Header() {
             <span className="text-sky-400">Me</span>
           </h1>
         </Link>
-        <form className="bg-sky-50 p-2 rounded-md flex items-center">
+        <form className="bg-sky-900 p-2 rounded-md flex items-center">
           <input
             type="text"
             className="bg-transparent focus:outline-none w-24 sm:w-72"
             placeholder="Suche..."
           />
-          <FaSearch className="text-sky-800" />
+          <FaSearch className="text-sky-100" />
         </form>
         <ul className="flex gap-4">
           <Link to="/about">
             <li>Über uns</li>
           </Link>
-          {!currentUser && (
-            <Link to="/login">
-              <li>Login</li>
-            </Link>
-          )}
+          <Link to="/profile">
+            {currentUser ? getInitials(currentUser) : <li>Login</li>}
+          </Link>
         </ul>
       </div>
     </header>

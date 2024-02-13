@@ -43,7 +43,7 @@ export default function SignUp() {
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-3">
           <input
-            required={true}
+            required
             type="text"
             placeholder="Vorname"
             className="border p-2 rounded-md"
@@ -51,7 +51,7 @@ export default function SignUp() {
             onChange={handleChange}
           ></input>
           <input
-            required={true}
+            required
             type="text"
             placeholder="Nachname"
             className="border p-2 rounded-md"
@@ -60,7 +60,7 @@ export default function SignUp() {
           ></input>
         </div>
         <input
-          required={true}
+          required
           type="email"
           placeholder="E-Mail Adresse"
           className="border p-2 rounded-md"
@@ -68,7 +68,7 @@ export default function SignUp() {
           onChange={handleChange}
         ></input>
         <input
-          required={true}
+          required
           type="password"
           placeholder="Passwort"
           className="border p-2 rounded-md"
