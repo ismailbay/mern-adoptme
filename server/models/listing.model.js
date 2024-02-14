@@ -39,28 +39,31 @@ const DogBreed = {
   Mix: Symbol("Mix"),
 };
 
-const listingSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  species: {
-    type: String,
-    enum: Object.keys(Species),
-    required: true,
+const listingSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    species: {
+      type: String,
+      enum: Object.keys(Species),
+      required: true,
+    },
+    sex: { type: String, enum: Object.keys(Sex), required: true },
+    breed: {
+      type: String,
+      enum: Object.keys(CatBreed).concat(Object.keys(DogBreed)),
+      required: true,
+    },
+    birthdate: { type: Date, required: true },
+    imagesPaths: { type: Array },
+    description: { type: String },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
-  sex: { type: String, enum: Object.keys(Sex), required: true },
-  breed: {
-    type: String,
-    enum: Object.keys(CatBreed).concat(Object.keys(DogBreed)),
-    required: true,
-  },
-  birthdate: { type: Date, required: true },
-  imagesPaths: { type: Array },
-  description: { type: String },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-});
+  { timestamps: true },
+);
 
 const Listing = mongoose.model("Listing", listingSchema);
 
